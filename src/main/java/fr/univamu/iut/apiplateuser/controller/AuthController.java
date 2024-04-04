@@ -5,6 +5,8 @@ import fr.univamu.iut.apiplateuser.entity.LoginCredentials;
 import fr.univamu.iut.apiplateuser.entity.User;
 import fr.univamu.iut.apiplateuser.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,12 +26,22 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginCredentials loginCredentials) {
-        return this.gson.toJson(this.authService.authenticate(loginCredentials.getUsername(), loginCredentials.getPassword()));
+    public ResponseEntity<String> login(@RequestBody LoginCredentials loginCredentials) {
+        User authenticatedUser = this.authService.authenticate(loginCredentials.getUsername(), loginCredentials.getPassword());
+        if (authenticatedUser != null) {
+            return ResponseEntity.ok(this.gson.toJson(authenticatedUser.readModel()));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        }
     }
 
     @PostMapping("/register")
-    public String register(@RequestBody User user) {
-        return this.gson.toJson(this.authService.register(user));
+    public ResponseEntity<String> register(@RequestBody User user) {
+        User registeredUser = this.authService.register(user);
+        if (registeredUser != null) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(this.gson.toJson(registeredUser.readModel()));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User registration failed");
+        }
     }
 }

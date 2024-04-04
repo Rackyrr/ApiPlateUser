@@ -8,5 +8,5 @@ public interface DishService {
     public Dish getPlateById(int id);
     public Dish addPlate(Dish dish);
     public Dish updatePlate(Dish dish);
-    public void deletePlate(int id);
+    public boolean deletePlate(int id);
 }

@@ -35,6 +35,14 @@ public class User {
         this.deliveryAddress = deliveryAddress;
     }
 
+    public UserReadModel readModel(){
+        return new UserReadModel(
+                this.id,
+                this.username,
+                this.email,
+                this.deliveryAddress);
+    }
+
     public int getId() {
         return id;
     }

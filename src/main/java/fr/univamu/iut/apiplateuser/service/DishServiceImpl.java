@@ -38,7 +38,8 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public void deletePlate(int id) {
+    public boolean deletePlate(int id) {
         this.plateRepository.deleteById(id);
+        return (this.plateRepository.findById(id).isEmpty());
     }
 }
