@@ -3,8 +3,8 @@ package fr.univamu.iut.apiplateuser.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Plate")
-public class Plate {
+@Table(name = "dish")
+public class Dish {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -17,14 +17,14 @@ public class Plate {
     private String description;
 
 
-    public Plate(int id, String name, double price, String description) {
+    public Dish(int id, String name, double price, String description) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;
     }
 
-    public Plate() {}
+    public Dish() {}
 
     public int getId() {
         return id;

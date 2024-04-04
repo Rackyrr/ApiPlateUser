@@ -9,8 +9,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    @Column(name = "pseudo")
-    private String pseudo;
+    @Column(name = "username")
+    private String username;
     @Column(name= "password")
     private String password;
     @Column(name = "email")
@@ -18,9 +18,9 @@ public class User {
     @Column(name = "delivery_address")
     private String deliveryAddress;
 
-    public User(int id, String pseudo, String password, String email, String deliveryAddress) {
+    public User(int id, String username, String password, String email, String deliveryAddress) {
         this.id = id;
-        this.pseudo = pseudo;
+        this.username = username;
         this.password = password;
         this.email = email;
         this.deliveryAddress = deliveryAddress;
@@ -28,15 +28,11 @@ public class User {
 
     public User() {}
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", pseudo='" + pseudo + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", deliveryAddress='" + deliveryAddress + '\'' +
-                '}';
+    public User(String username, String hashedPassword, String email, String deliveryAddress) {
+        this.username = username;
+        this.password = hashedPassword;
+        this.email = email;
+        this.deliveryAddress = deliveryAddress;
     }
 
     public int getId() {
@@ -47,16 +43,20 @@ public class User {
         this.id = id;
     }
 
-    public String getPseudo() {
-        return pseudo;
+    public String getUsername() {
+        return username;
     }
 
-    public void setPseudo(String pseudo) {
-        this.pseudo = pseudo;
+    public void setUsername(String pseudo) {
+        this.username = pseudo;
     }
 
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {

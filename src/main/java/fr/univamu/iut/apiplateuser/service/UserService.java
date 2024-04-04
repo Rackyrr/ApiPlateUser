@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public interface UserService {
     public ArrayList<User> getAllUsers();
     public User getUserById(int id);
+    public User getUserByUsername(String username);
     public User addUser(User user);
     public User updateUser(User user);
     public void deleteUser(int id);
