@@ -8,24 +8,50 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller for handling dish-related operations.
+ */
 @RestController
 @RequestMapping("/dish")
 public class DishController {
 
+    /**
+     * The service for managing dishes.
+     */
     private final DishService dishService;
+
+    /**
+     * Gson instance for JSON serialization/deserialization.
+     */
     private final Gson gson;
 
+    /**
+     * Constructs a new DishController with the specified DishService.
+     *
+     * @param dishService The service for managing dishes.
+     */
     @Autowired
     public DishController(DishService dishService) {
         this.dishService = dishService;
         this.gson = new Gson();
     }
 
+    /**
+     * Retrieves all dishes.
+     *
+     * @return ResponseEntity with the JSON representation of all dishes.
+     */
     @GetMapping("/all")
     public ResponseEntity<String> getAllPlates() {
         return ResponseEntity.ok(this.gson.toJson(this.dishService.getAllPlates()));
     }
 
+    /**
+     * Retrieves a dish by its ID.
+     *
+     * @param id The ID of the dish to retrieve.
+     * @return ResponseEntity with the JSON representation of the dish if found, or an error message otherwise.
+     */
     @GetMapping("{id}")
     public ResponseEntity<String> getPlateById(@PathVariable int id) {
         Dish dish = this.dishService.getPlateById(id);
@@ -36,6 +62,12 @@ public class DishController {
         }
     }
 
+    /**
+     * Adds a new dish.
+     *
+     * @param dish The dish to add.
+     * @return ResponseEntity with the JSON representation of the added dish if successful, or an error message otherwise.
+     */
     @PostMapping("/add")
     public ResponseEntity<String> addPlate(@RequestBody Dish dish) {
         Dish addedDish = this.dishService.addPlate(dish);
@@ -46,6 +78,12 @@ public class DishController {
         }
     }
 
+    /**
+     * Updates an existing dish.
+     *
+     * @param dish The updated dish.
+     * @return ResponseEntity with the JSON representation of the updated dish if successful, or an error message otherwise.
+     */
     @PutMapping("/update")
     public ResponseEntity<String> updatePlate(@RequestBody Dish dish) {
         Dish updatedDish = this.dishService.updatePlate(dish);
@@ -56,6 +94,12 @@ public class DishController {
         }
     }
 
+    /**
+     * Deletes a dish by its ID.
+     *
+     * @param id The ID of the dish to delete.
+     * @return ResponseEntity indicating success or failure of the deletion operation.
+     */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deletePlate(@PathVariable int id) {
         boolean deleted = this.dishService.deletePlate(id);
